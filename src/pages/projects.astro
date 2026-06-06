@@ -5,14 +5,14 @@ const projects = [
   {
     title: 'EKS Multi-Environment Platform',
     status: 'Production',
-    stack: ['EKS 1.33', 'ArgoCD', 'Helm', 'Karpenter', 'IRSA', 'MSK', 'Aurora', 'OpenSearch', 'Redis'],
+    stack: ['EKS 1.36', 'ArgoCD 3', 'Helm 4', 'Karpenter', 'IRSA', 'MSK', 'Aurora', 'OpenSearch', 'Redis'],
     description: 'Designed and migrated all environments off ECS Fargate to a fully self-managed EKS platform. Production runs 60+ microservices across 42 ArgoCD-managed services — UI, agency portal, scheduler, email pipeline, IMAP, billing, AI services, analytics, SSO, MCP server, and more.',
     details: [
       'Spot + on-demand node groups with interruption handling',
       'ECR with lifecycle policies across 160+ repositories',
       'IRSA-scoped IAM for zero-trust pod-level access',
       'Internal + external ALBs with WAF in front',
-      '6 consecutive zero-downtime K8s version upgrades (1.27 → 1.33)',
+      '9 consecutive zero-downtime K8s version upgrades (1.27 → 1.36)',
       'Custom Helm chart library shared across all services',
     ],
     icon: '⎈',
