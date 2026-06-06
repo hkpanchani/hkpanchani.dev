@@ -1,0 +1,251 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="g1v" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="g2v" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="48" fill="#0a0a0f"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.04">
+    <line x1="0" y1="100" x2="400" y2="100" stroke="#6366f1" stroke-width="0.5"/>
+    <line x1="0" y1="200" x2="400" y2="200" stroke="#6366f1" stroke-width="0.5"/>
+    <line x1="0" y1="300" x2="400" y2="300" stroke="#6366f1" stroke-width="0.5"/>
+    <line x1="100" y1="0" x2="100" y2="400" stroke="#6366f1" stroke-width="0.5"/>
+    <line x1="200" y1="0" x2="200" y2="400" stroke="#6366f1" stroke-width="0.5"/>
+    <line x1="300" y1="0" x2="300" y2="400" stroke="#6366f1" stroke-width="0.5"/>
+  </g>
+
+  <!-- Ambient glow -->
+  <ellipse cx="200" cy="185" rx="120" ry="90" fill="#6366f1" opacity="0.06" filter="url(#softglow)"/>
+
+  <!-- ═══ DEVOPS INFINITY LOOP (behind the HP letters) ═══ -->
+  <path d="M100,190 C100,150 145,130 175,160 C195,180 205,180 225,160 C255,130 300,150 300,190
+           C300,230 255,250 225,220 C205,200 195,200 175,220 C145,250 100,230 100,190 Z"
+        stroke="url(#g1)" stroke-width="1.5" fill="none" opacity="0.12"/>
+  <!-- Infinity loop animated particle -->
+  <circle r="3" fill="#8b5cf6" opacity="0">
+    <animateMotion dur="6s" repeatCount="indefinite"
+      path="M100,190 C100,150 145,130 175,160 C195,180 205,180 225,160 C255,130 300,150 300,190
+             C300,230 255,250 225,220 C205,200 195,200 175,220 C145,250 100,230 100,190 Z"/>
+    <animate attributeName="opacity" values="0;0.6;0.6;0" dur="6s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- ═══ MINI SERVER RACK — LEFT SIDE ═══ -->
+  <g opacity="0.25">
+    <!-- Rack frame -->
+    <rect x="42" y="148" width="36" height="88" rx="3" fill="none" stroke="url(#g1)" stroke-width="1"/>
+    <!-- 1U slab 1 -->
+    <rect x="46" y="153" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.5"/>
+    <circle cx="51" cy="158" r="1.5" fill="#22c55e" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="56" cy="158" r="1.5" fill="#eab308" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 1U slab 2 -->
+    <rect x="46" y="167" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.4"/>
+    <circle cx="51" cy="172" r="1.5" fill="#22c55e" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 1U slab 3 -->
+    <rect x="46" y="181" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.5"/>
+    <circle cx="51" cy="186" r="1.5" fill="#22c55e" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1.9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="56" cy="186" r="1.5" fill="#06b6d4" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 1U slab 4 -->
+    <rect x="46" y="195" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.35"/>
+    <circle cx="51" cy="200" r="1.5" fill="#22c55e" opacity="0.6"/>
+    <!-- 1U slab 5 -->
+    <rect x="46" y="209" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.45"/>
+    <circle cx="51" cy="214" r="1.5" fill="#22c55e" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 1U slab 6 -->
+    <rect x="46" y="223" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.3"/>
+    <circle cx="51" cy="228" r="1.5" fill="#eab308" opacity="0.5"/>
+  </g>
+
+  <!-- ═══ MINI SERVER RACK — RIGHT SIDE ═══ -->
+  <g opacity="0.25">
+    <rect x="322" y="148" width="36" height="88" rx="3" fill="none" stroke="url(#g1)" stroke-width="1"/>
+    <rect x="326" y="153" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.45"/>
+    <circle cx="349" cy="158" r="1.5" fill="#22c55e" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <rect x="326" y="167" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.5"/>
+    <circle cx="349" cy="172" r="1.5" fill="#06b6d4" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.2;0.7" dur="2.1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="344" cy="172" r="1.5" fill="#22c55e" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+    <rect x="326" y="181" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.4"/>
+    <circle cx="349" cy="186" r="1.5" fill="#22c55e" opacity="0.7"/>
+    <rect x="326" y="195" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.5"/>
+    <circle cx="349" cy="200" r="1.5" fill="#eab308" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="1.7s" repeatCount="indefinite"/>
+    </circle>
+    <rect x="326" y="209" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.35"/>
+    <circle cx="349" cy="214" r="1.5" fill="#22c55e" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <rect x="326" y="223" width="28" height="10" rx="2" fill="url(#g1)" opacity="0.4"/>
+    <circle cx="349" cy="228" r="1.5" fill="#22c55e" opacity="0.6"/>
+  </g>
+
+  <!-- Cable connections from racks to HP letters -->
+  <path d="M78,190 Q90,190 100,188" stroke="url(#g1)" stroke-width="1" fill="none" opacity="0.15"/>
+  <path d="M322,190 Q310,190 300,188" stroke="url(#g1)" stroke-width="1" fill="none" opacity="0.15"/>
+
+  <!-- ═══ KUBERNETES WHEEL — top right accent ═══ -->
+  <g transform="translate(330,85)" opacity="0.18">
+    <!-- Outer ring -->
+    <circle cx="0" cy="0" r="22" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
+    <!-- Inner hub -->
+    <circle cx="0" cy="0" r="6" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
+    <!-- 7 spokes (K8s wheel) -->
+    <line x1="0" y1="-8" x2="0" y2="-20" stroke="url(#g1)" stroke-width="1.2"/>
+    <line x1="7.5" y1="-3.5" x2="18.5" y2="-8.5" stroke="url(#g1)" stroke-width="1.2"/>
+    <line x1="7" y1="5" x2="17" y2="12" stroke="url(#g1)" stroke-width="1.2"/>
+    <line x1="0" y1="8" x2="0" y2="20" stroke="url(#g1)" stroke-width="1.2"/>
+    <line x1="-7" y1="5" x2="-17" y2="12" stroke="url(#g1)" stroke-width="1.2"/>
+    <line x1="-7.5" y1="-3.5" x2="-18.5" y2="-8.5" stroke="url(#g1)" stroke-width="1.2"/>
+    <!-- Slow rotation -->
+    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="30s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- ═══ GEAR — bottom left accent ═══ -->
+  <g transform="translate(75,310)" opacity="0.14">
+    <circle cx="0" cy="0" r="10" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
+    <!-- Gear teeth (8 stubs) -->
+    <line x1="0" y1="-12" x2="0" y2="-17" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="8.5" y1="-8.5" x2="12" y2="-12" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="12" y1="0" x2="17" y2="0" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="8.5" y1="8.5" x2="12" y2="12" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="0" y1="12" x2="0" y2="17" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-8.5" y1="8.5" x2="-12" y2="12" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-12" y1="0" x2="-17" y2="0" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-8.5" y1="-8.5" x2="-12" y2="-12" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Inner dot -->
+    <circle cx="0" cy="0" r="3" fill="url(#g1)" opacity="0.5"/>
+    <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="20s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- ═══ CI/CD ARROWS — top left accent ═══ -->
+  <g transform="translate(80,90)" opacity="0.15">
+    <!-- Circular arrow path -->
+    <path d="M-12,0 A12,12 0 1,1 0,12" stroke="url(#g1)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- Arrow head -->
+    <polygon points="0,12 -4,6 4,6" fill="url(#g1)"/>
+    <!-- Second arrow (opposite) -->
+    <path d="M12,0 A12,12 0 1,1 0,-12" stroke="url(#g1)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <polygon points="0,-12 -4,-6 4,-6" fill="url(#g1)"/>
+  </g>
+
+  <!-- ═══ THE MAIN MARK: HP as circuit-board traces ═══ -->
+  <g filter="url(#glow)">
+
+    <!-- H left vertical -->
+    <line x1="120" y1="130" x2="120" y2="258" stroke="url(#g1v)" stroke-width="6" stroke-linecap="round"/>
+    <!-- H right vertical -->
+    <line x1="188" y1="130" x2="188" y2="258" stroke="url(#g1v)" stroke-width="6" stroke-linecap="round"/>
+    <!-- H crossbar with PCB jog -->
+    <path d="M120,192 L140,192 L140,187 L168,187 L168,192 L188,192"
+          stroke="url(#g1)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- H solder-pad nodes -->
+    <circle cx="120" cy="130" r="8" fill="#0a0a0f" stroke="url(#g1)" stroke-width="3"/>
+    <circle cx="120" cy="258" r="8" fill="#0a0a0f" stroke="url(#g1)" stroke-width="3"/>
+    <circle cx="188" cy="130" r="8" fill="#0a0a0f" stroke="url(#g1)" stroke-width="3"/>
+    <circle cx="188" cy="258" r="8" fill="#0a0a0f" stroke="url(#g1)" stroke-width="3"/>
+    <!-- Junction pads (filled) -->
+    <circle cx="120" cy="192" r="7" fill="url(#g1)"/>
+    <circle cx="188" cy="192" r="7" fill="url(#g1)"/>
+    <!-- Via dots on crossbar jog -->
+    <circle cx="140" cy="187" r="3" fill="url(#g1)" opacity="0.6"/>
+    <circle cx="168" cy="187" r="3" fill="url(#g1)" opacity="0.6"/>
+
+    <!-- P vertical -->
+    <line x1="225" y1="130" x2="225" y2="258" stroke="url(#g2v)" stroke-width="6" stroke-linecap="round"/>
+    <!-- P bowl arc -->
+    <path d="M225,135 L248,135 C284,135 288,158 284,175 C280,190 258,194 242,194 L225,194"
+          stroke="url(#g1)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- P solder-pad nodes -->
+    <circle cx="225" cy="130" r="8" fill="#0a0a0f" stroke="url(#g1)" stroke-width="3"/>
+    <circle cx="225" cy="258" r="8" fill="#0a0a0f" stroke="url(#g1)" stroke-width="3"/>
+    <!-- P junction pad -->
+    <circle cx="225" cy="194" r="7" fill="url(#g1)"/>
+    <!-- P bowl apex node -->
+    <circle cx="286" cy="155" r="6" fill="url(#g1)"/>
+
+    <!-- Bridge traces H→P (dashed data bus) -->
+    <line x1="188" y1="130" x2="225" y2="130" stroke="url(#g1)" stroke-width="3" stroke-dasharray="6 4" opacity="0.4"/>
+    <line x1="188" y1="258" x2="225" y2="258" stroke="url(#g1)" stroke-width="3" stroke-dasharray="6 4" opacity="0.4"/>
+  </g>
+
+  <!-- ═══ Animated data-flow particles ═══ -->
+  <circle r="3" fill="#06b6d4" opacity="0">
+    <animateMotion dur="2.5s" repeatCount="indefinite" path="M120,130 L120,258"/>
+    <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="3" fill="#8b5cf6" opacity="0">
+    <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.8s"
+      path="M120,192 L140,192 L140,187 L168,187 L168,192 L188,192"/>
+    <animate attributeName="opacity" values="0;0.9;0.9;0" dur="1.8s" repeatCount="indefinite" begin="0.8s"/>
+  </circle>
+  <circle r="3" fill="#06b6d4" opacity="0">
+    <animateMotion dur="3s" repeatCount="indefinite" begin="1.5s"
+      path="M225,135 L248,135 C284,135 288,158 284,175 C280,190 258,194 242,194 L225,194"/>
+    <animate attributeName="opacity" values="0;0.9;0.9;0" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+
+  <!-- Pulse rings on junction nodes -->
+  <circle cx="120" cy="192" r="7" fill="none" stroke="#6366f1" stroke-width="1">
+    <animate attributeName="r" values="7;20;7" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="286" cy="155" r="6" fill="none" stroke="#06b6d4" stroke-width="1">
+    <animate attributeName="r" values="6;18;6" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+    <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+
+  <!-- Decorative trace stubs -->
+  <line x1="120" y1="130" x2="95" y2="108" stroke="#6366f1" stroke-width="1.5" opacity="0.12" stroke-linecap="round"/>
+  <line x1="286" y1="155" x2="310" y2="145" stroke="#06b6d4" stroke-width="1.5" opacity="0.12" stroke-linecap="round"/>
+  <line x1="120" y1="258" x2="95" y2="280" stroke="#6366f1" stroke-width="1.5" opacity="0.12" stroke-linecap="round"/>
+  <line x1="225" y1="258" x2="250" y2="282" stroke="#06b6d4" stroke-width="1.5" opacity="0.12" stroke-linecap="round"/>
+
+  <!-- Tiny endpoint pads on stubs -->
+  <circle cx="95" cy="108" r="2.5" fill="#6366f1" opacity="0.12"/>
+  <circle cx="310" cy="145" r="2.5" fill="#06b6d4" opacity="0.12"/>
+  <circle cx="95" cy="280" r="2.5" fill="#6366f1" opacity="0.12"/>
+  <circle cx="250" cy="282" r="2.5" fill="#06b6d4" opacity="0.12"/>
+
+  <!-- Domain text -->
+  <text x="200" y="330" text-anchor="middle" font-family="'JetBrains Mono','Fira Code',monospace" font-size="15" font-weight="500" fill="#5a5a6e" letter-spacing="3">hkpanchani.dev</text>
+  <line x1="120" y1="340" x2="280" y2="340" stroke="url(#g1)" stroke-width="0.5" opacity="0.15"/>
+</svg>

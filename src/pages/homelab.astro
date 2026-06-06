@@ -1,0 +1,592 @@
+---
+import Base from '../layouts/Base.astro';
+
+const servers = [
+  { label: 'Node 1', cpu: '56c / 112t', ram: '94 GiB', status: 'online' },
+  { label: 'Node 2', cpu: '56c / 112t', ram: '94 GiB', status: 'online' },
+  { label: 'Node 3', cpu: '56c / 112t', ram: '94 GiB', status: 'online' },
+];
+
+const services = [
+  { name: 'Proxmox VE', desc: '3-node cluster with HA and live migration', category: 'hypervisor', icon: '🖥️' },
+  { name: 'TrueNAS', desc: '9 TiB ZFS storage with snapshots and replication', category: 'storage', icon: '💾' },
+  { name: 'pfSense', desc: 'Routing, firewall, VLANs, and traffic shaping', category: 'network', icon: '🔥' },
+  { name: 'Traefik', desc: 'HTTP/3 reverse proxy with auto Let\'s Encrypt', category: 'network', icon: '🔀' },
+  { name: 'Matrix / Synapse', desc: '5-worker federation with coturn TURN server', category: 'comms', icon: '💬' },
+  { name: 'VaultWarden', desc: 'Self-hosted Bitwarden-compatible password vault', category: 'security', icon: '🔐' },
+  { name: 'Headscale + Tailscale', desc: 'Zero-trust mesh VPN with self-hosted control plane', category: 'security', icon: '🌐' },
+  { name: 'Home Assistant', desc: 'Smart home automation — Zigbee, Matter, Z-Wave', category: 'iot', icon: '🏠' },
+  { name: 'Jellyfin', desc: 'Media server with hardware transcoding', category: 'media', icon: '🎬' },
+  { name: 'Bazarr', desc: 'Automated subtitle management', category: 'media', icon: '📝' },
+  { name: 'GitLab CE', desc: 'Private Git + CI for personal projects', category: 'dev', icon: '📦' },
+  { name: 'Ollama', desc: 'Self-hosted LLM inference (Llama, Mistral, etc.)', category: 'ai', icon: '🧠' },
+];
+
+const aiTools = [
+  { name: 'Claude Code', desc: 'Primary AI pair programmer for complex architecture work', accent: true },
+  { name: 'GitHub Copilot Agent', desc: 'Inline suggestions and multi-file agent mode', accent: true },
+  { name: 'Cursor', desc: 'AI-native IDE with custom model routing', accent: true },
+  { name: 'Ollama (Self-Hosted)', desc: 'Local inference for privacy-sensitive tasks and experimentation', accent: false },
+  { name: 'Frontier APIs', desc: 'Claude Opus/Sonnet, GPT-4o for production-grade output', accent: false },
+];
+
+const mcpIntegrations = [
+  { name: 'Grafana MCP', desc: 'Query Prometheus, Loki, Tempo, ClickHouse from AI agents' },
+  { name: 'Jira/Atlassian MCP', desc: 'Create issues, search tickets, update sprints via AI' },
+  { name: 'Odoo MCP', desc: 'ERP operations — invoicing, inventory, CRM from agent context' },
+  { name: 'Bitwarden MCP', desc: 'Secure credential lookup during automation workflows' },
+];
+---
+
+<Base title="Homelab & AI Workflow — Hiren Panchani" description="Personal R&D lab — 3-node Proxmox cluster, 10GbE networking, self-hosted everything, and AI-augmented development workflow.">
+
+  <!-- Server Rack Hero -->
+  <section class="lab-hero">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="page-badge">
+          <span class="badge-icon">🔧</span>
+          Personal R&D Lab
+        </div>
+        <h1 class="section-title">The <span class="gradient-text">Homelab</span></h1>
+        <p class="section-subtitle">
+          More compute than some startups. A 3-node Proxmox cluster with 10GbE
+          networking, 9 TiB of ZFS storage, and enough services to keep me debugging
+          at 2 AM on a Saturday.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hardware Section -->
+  <section class="hardware">
+    <div class="container">
+      <h2 class="section-title reveal">Server <span class="gradient-text">Rack</span></h2>
+
+      <div class="rack-visual reveal">
+        <div class="rack-frame">
+          <div class="rack-header">
+            <span class="rack-label">RACK-01</span>
+            <span class="rack-status">
+              <span class="status-dot"></span>
+              All Systems Operational
+            </span>
+          </div>
+
+          {servers.map((s, i) => (
+            <div class="server-unit" style={`animation-delay: ${i * 0.15}s`}>
+              <div class="server-face">
+                <div class="server-leds">
+                  <span class="led led-power"></span>
+                  <span class="led led-activity"></span>
+                  <span class="led led-network"></span>
+                </div>
+                <div class="server-info">
+                  <span class="server-name">{s.label}</span>
+                  <span class="server-model">Dell VxRail P570F</span>
+                </div>
+                <div class="server-specs">
+                  <span class="spec-badge">{s.cpu}</span>
+                  <span class="spec-badge">{s.ram}</span>
+                </div>
+                <div class="server-vents">
+                  {Array.from({length: 8}).map(() => (
+                    <span class="vent"></span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <!-- Network/Storage units -->
+          <div class="server-unit storage-unit">
+            <div class="server-face">
+              <div class="server-leds">
+                <span class="led led-power"></span>
+                <span class="led led-activity"></span>
+              </div>
+              <div class="server-info">
+                <span class="server-name">NAS</span>
+                <span class="server-model">TrueNAS · 9 TiB ZFS</span>
+              </div>
+              <div class="server-specs">
+                <span class="spec-badge">RAID-Z2</span>
+                <span class="spec-badge">Snapshots</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="server-unit network-unit">
+            <div class="server-face">
+              <div class="server-leds">
+                <span class="led led-power"></span>
+                {Array.from({length: 4}).map(() => (
+                  <span class="led led-network blink"></span>
+                ))}
+              </div>
+              <div class="server-info">
+                <span class="server-name">Network</span>
+                <span class="server-model">Intel X710 · 10GbE · pfSense</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick specs -->
+      <div class="spec-strip reveal">
+        <div class="spec-item"><span class="spec-num">168</span><span class="spec-unit">Cores</span></div>
+        <div class="spec-item"><span class="spec-num">336</span><span class="spec-unit">Threads</span></div>
+        <div class="spec-item"><span class="spec-num">282</span><span class="spec-unit">GiB RAM</span></div>
+        <div class="spec-item"><span class="spec-num">9</span><span class="spec-unit">TiB Storage</span></div>
+        <div class="spec-item"><span class="spec-num">10</span><span class="spec-unit">GbE Network</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services-section">
+    <div class="container">
+      <h2 class="section-title reveal">Self-Hosted <span class="gradient-text">Services</span></h2>
+      <p class="section-subtitle reveal">Everything runs on my hardware. Because why trust the cloud when you ARE the cloud?</p>
+
+      <div class="services-grid">
+        {services.map((s, i) => (
+          <div class={`service-card glass-card reveal reveal-delay-${(i % 4) + 1}`}>
+            <span class="service-icon">{s.icon}</span>
+            <div class="service-info">
+              <h3 class="service-name">{s.name}</h3>
+              <p class="service-desc">{s.desc}</p>
+            </div>
+            <span class="service-cat">{s.category}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Workflow -->
+  <section class="ai-section">
+    <div class="container">
+      <h2 class="section-title reveal">AI-Augmented <span class="gradient-text">Workflow</span></h2>
+      <p class="section-subtitle reveal">
+        I treat AI tools like I treat my infrastructure — configure deeply, integrate everywhere,
+        and always have a self-hosted fallback.
+      </p>
+
+      <div class="ai-grid">
+        <div class="ai-col reveal">
+          <h3 class="ai-col-title">Daily Drivers</h3>
+          {aiTools.map((t) => (
+            <div class={`ai-tool glass-card ${t.accent ? 'accent' : ''}`}>
+              <h4>{t.name}</h4>
+              <p>{t.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="ai-col reveal reveal-delay-2">
+          <h3 class="ai-col-title">MCP Integrations</h3>
+          {mcpIntegrations.map((m) => (
+            <div class="ai-tool glass-card">
+              <h4>{m.name}</h4>
+              <p>{m.desc}</p>
+            </div>
+          ))}
+
+          <div class="security-note glass-card">
+            <span class="security-icon">🛡️</span>
+            <div>
+              <h4>Security-First AI</h4>
+              <p>OWASP LLM Top 10 compliance. Prompt injection guards, PII output filtering, and hybrid inference — sensitive tasks stay on self-hosted Ollama.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="philosophy">
+    <div class="container">
+      <div class="philosophy-card glass-card reveal">
+        <div class="philosophy-terminal">
+          <div class="term-header">
+            <span class="td red"></span>
+            <span class="td yellow"></span>
+            <span class="td green"></span>
+          </div>
+          <pre class="term-content">
+<span class="tc-comment"># Why run a homelab?</span>
+<span class="tc-prompt">$</span> echo "Because every production outage I've fixed
+  started with something I first broke at home."
+
+<span class="tc-comment"># The homelab is where I:</span>
+<span class="tc-prompt">$</span> cat reasons.txt
+- Test Kubernetes upgrades before touching production EKS
+- Prototype observability patterns (Prometheus, Loki, Tempo)
+- Experiment with AI/ML inference on real hardware
+- Run my own comms (Matrix), security (VaultWarden), and DNS
+- Prove that self-hosting saves money AND teaches more
+
+<span class="tc-prompt">$</span> uptime
+ 3:47am up 847 days, 14:23, load average: 0.42, 0.38, 0.31
+          </pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lab-hero {
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+  }
+
+  .page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-2);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Server Rack Visual ── */
+  .rack-visual {
+    margin-top: 2rem;
+    max-width: 800px;
+  }
+
+  .rack-frame {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .rack-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .rack-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .rack-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    color: #22c55e;
+    font-weight: 600;
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(34,197,94,0.5);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+  }
+
+  .server-unit {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    animation: rack-slide-in 0.6s ease-out both;
+  }
+
+  @keyframes rack-slide-in {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .server-face {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .server-leds {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .led {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  .led-power { background: #22c55e; box-shadow: 0 0 4px rgba(34,197,94,0.5); }
+  .led-activity { background: #eab308; animation: blink-led 0.8s ease-in-out infinite alternate; }
+  .led-network { background: #06b6d4; animation: blink-led 0.4s ease-in-out infinite alternate; }
+  .led.blink { animation: blink-led 0.3s ease-in-out infinite alternate; }
+
+  @keyframes blink-led {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+
+  .server-name {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    display: block;
+  }
+
+  .server-model {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .server-specs {
+    display: flex;
+    gap: 0.4rem;
+    margin-left: auto;
+  }
+
+  .spec-badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.15);
+    color: var(--accent-1);
+  }
+
+  .server-vents {
+    display: flex;
+    gap: 2px;
+    margin-left: 1rem;
+  }
+
+  .vent {
+    width: 3px;
+    height: 20px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 1px;
+  }
+
+  .storage-unit .server-face { background: rgba(234,179,8,0.02); }
+  .network-unit .server-face { background: rgba(6,182,212,0.02); }
+
+  /* ── Spec Strip ── */
+  .spec-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .spec-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    background: var(--bg-secondary);
+  }
+
+  .spec-num {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .spec-unit {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.25rem;
+  }
+
+  /* ── Services Grid ── */
+  .services-section { padding-top: 4rem; }
+  .services-section .section-subtitle { margin-bottom: 2.5rem; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .service-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+  }
+
+  .service-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+  .service-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .service-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.15rem;
+    line-height: 1.4;
+  }
+
+  .service-cat {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  /* ── AI Section ── */
+  .ai-section {
+    padding-top: 4rem;
+  }
+
+  .ai-section .section-subtitle { margin-bottom: 2.5rem; }
+
+  .ai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .ai-col-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .ai-tool {
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ai-tool h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .ai-tool p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+    line-height: 1.4;
+  }
+
+  .ai-tool.accent {
+    border-color: rgba(139,92,246,0.15);
+    background: rgba(139,92,246,0.04);
+  }
+
+  .ai-tool.accent h4 { color: var(--accent-2); }
+
+  .security-note {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-color: rgba(34,197,94,0.15);
+    background: rgba(34,197,94,0.03);
+  }
+
+  .security-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .security-note h4 { font-size: 0.95rem; font-weight: 600; color: #22c55e; }
+  .security-note p { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem; line-height: 1.5; }
+
+  /* ── Philosophy Terminal ── */
+  .philosophy {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .philosophy-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .philosophy-terminal {
+    font-family: var(--font-mono);
+  }
+
+  .term-header {
+    display: flex;
+    gap: 6px;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .td {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .td.red { background: #ff5f57; }
+  .td.yellow { background: #febc2e; }
+  .td.green { background: #28c840; }
+
+  .term-content {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+
+  .tc-comment { color: var(--text-muted); }
+  .tc-prompt { color: var(--accent-3); font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .spec-strip { grid-template-columns: repeat(3, 1fr); }
+    .ai-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .server-specs { display: none; }
+    .server-vents { display: none; }
+  }
+</style>

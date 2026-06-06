@@ -1,0 +1,20 @@
+# CV / personal documents (do not commit)
+Hiren Panchani.pdf
+*.pdf
+old_cv.md
+resume.md
+1~
+
+# Astro / build
+dist/
+.astro/
+node_modules/
+
+# Python venv (used only for CV text extraction)
+.venv/
+
+# OS files
+.DS_Store
+
+# Editor
+.idea/

@@ -1,0 +1,166 @@
+---
+const achievements = [
+  {
+    icon: '🏗️',
+    title: 'Greenfield Multi-Region AWS Platform',
+    desc: 'Architected and built a complete multi-region, multi-environment AWS+EKS platform from scratch — 4 isolated VPCs (prod/staging/warmup/shared), hub-and-spoke topology, 4 AZs, secondary DR region with cross-region S3/ECR replication, Aurora Global Database, and Route 53 health-checked failover.',
+    tags: ['AWS', 'EKS', 'Multi-Region', 'VPC', 'Aurora Global'],
+  },
+  {
+    icon: '⎈',
+    title: 'Kubernetes at Scale',
+    desc: 'Migrated all workloads from ECS Fargate to 5 EKS clusters on Kubernetes 1.36, with IRSA, custom Helm chart library, ArgoCD GitOps for 42 production services. Executed 9 consecutive zero-downtime EKS upgrades from 1.27 through 1.36.',
+    tags: ['Kubernetes', 'ArgoCD', 'Helm', 'Zero-Downtime'],
+  },
+  {
+    icon: '🔧',
+    title: '44-Module Terraform Library',
+    desc: 'Built a reusable Terraform module library of 44 AWS modules used across 4 environments — new services ship in approximately 30 lines of HCL, dramatically accelerating infrastructure provisioning.',
+    tags: ['Terraform', 'IaC', 'Modules'],
+  },
+  {
+    icon: '📊',
+    title: 'Full-Stack Observability from Scratch',
+    desc: 'Designed and deployed a self-hosted observability stack: kube-prometheus-stack, Loki (S3-backed), Tempo (vParquet4), Grafana with 8 datasources and 40+ dashboards, in-house OTel SDK across Node.js services. Achieved ~20% lower 3-year TCO vs commercial APM.',
+    tags: ['Prometheus', 'Grafana', 'OpenTelemetry', 'Loki'],
+  },
+  {
+    icon: '💰',
+    title: '~$156K/Year Cost Reduction',
+    desc: 'Led 3 optimization cycles achieving ~30% savings each ($10K→$7K, $13K→$8K, $15K→$10K/mo) via RI/SP strategies, Graviton migration, Spot instances, Aurora I/O-Optimized with Blue/Green deployments, ElastiCache right-sizing, and S3 lifecycle policies — all with zero p99 latency regression.',
+    tags: ['FinOps', 'Graviton', 'Cost Optimization'],
+  },
+  {
+    icon: '🤖',
+    title: 'AI/ML in Production',
+    desc: 'Built a semantic search POC using Bedrock Titan Embeddings v2 + OpenSearch k-NN (HNSW, 1024-dim, cosine similarity 0.65–0.88) and an AI Incident Investigation Agent that returns root-cause analysis across 5 datasources in under 30 seconds — replacing 30-min to 2-hour manual triage.',
+    tags: ['Bedrock', 'Vector Search', 'MCP', 'RAG'],
+  },
+  {
+    icon: '🛡️',
+    title: 'Security & Compliance Ownership',
+    desc: 'Owned platform controls for SOC 2 Type I & II, ISO 27001/27701, and GDPR compliance on Sprinto + Vanta. Deployed VaultWarden, SSOReady (SAML/OIDC), and migrated 30+ engineers from OpenVPN to Tailscale+Headscale zero-trust mesh.',
+    tags: ['SOC 2', 'ISO 27001', 'Zero Trust'],
+  },
+  {
+    icon: '📧',
+    title: 'High-Throughput Email Infrastructure',
+    desc: 'Designed the full Scheduler→Composer→Sender→MTA pipeline powering 6B+ emails/year with an in-house ESP — dedicated IPs, multi-node MTA, automated DKIM/SPF/DMARC, and ClickHouse analytics for deliverability tracking.',
+    tags: ['Email', 'ClickHouse', 'Scale'],
+  },
+  {
+    icon: '🗄️',
+    title: 'Database Modernization at Scale',
+    desc: 'Led a company-wide MySQL 5.7→8.0 Aurora upgrade with query compatibility verification, Blue/Green cutover, and read-replica validation. Migrated to Graviton (db.r6g) for ~20% better price-performance. Added Aurora PostgreSQL 16 clusters for new services — managing 8 Aurora clusters total.',
+    tags: ['Aurora', 'Blue/Green', 'Graviton', 'PostgreSQL'],
+  },
+  {
+    icon: '📦',
+    title: 'Bulk Data Ingestion Pipeline',
+    desc: 'Designed S3→Python decompressor→MongoDB+OpenSearch ingestion for monthly bulk lead/company datasets. Containerized on EKS with IRSA-scoped secrets from S3, handling terabytes of data imports reliably.',
+    tags: ['S3', 'MongoDB', 'OpenSearch', 'EKS'],
+  },
+  {
+    icon: '🔊',
+    title: 'Lambda → EKS Worker Migration',
+    desc: 'Replaced an AWS Lambda + ffmpeg layer with an EKS-based S3→SQS→worker pattern (Node.js + ffmpeg in Docker), shipped via Helm with IRSA. Cut per-job cost while eliminating the 15-minute Lambda timeout ceiling.',
+    tags: ['Lambda', 'SQS', 'EKS', 'ffmpeg'],
+  },
+  {
+    icon: '🏛️',
+    title: 'Cloud Transformation (5,000+ Users)',
+    desc: 'Led cloud/DevOps transformation for an institution supporting 5,000+ users — lift-and-shift from Proxmox VMs to AWS, built Jenkins+SonarQube developer platform, deployed Canvas LMS and GitLab CE, and implemented enterprise network security with pfSense/Sophos for the campus network.',
+    tags: ['AWS Migration', 'Jenkins', 'Docker', 'Networking'],
+  },
+];
+---
+
+<section class="achievements" id="achievements">
+  <div class="container">
+    <div class="section-header reveal-glitch">
+      <h2 class="section-title">Key <span class="gradient-text">Achievements</span></h2>
+      <p class="section-subtitle">Highlights from designing, building, and operating production infrastructure at scale.</p>
+    </div>
+
+    <div class="achievements-list">
+      {achievements.map((a, i) => (
+        <div class={`achievement-card glass-card ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'} reveal-delay-${(i % 3) + 1}`}>
+          <div class="achievement-icon">{a.icon}</div>
+          <div class="achievement-body">
+            <h3 class="achievement-title">{a.title}</h3>
+            <p class="achievement-desc">{a.desc}</p>
+            <div class="achievement-tags">
+              {a.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .achievements-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .achievement-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.75rem;
+    align-items: flex-start;
+  }
+
+  .achievement-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .achievement-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .achievement-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .achievement-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(99,102,241,0.08);
+    color: var(--accent-1);
+    border: 1px solid rgba(99,102,241,0.15);
+  }
+
+  @media (max-width: 768px) {
+    .achievements-list { grid-template-columns: 1fr; }
+    .achievement-card { flex-direction: column; }
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Skills from '../components/Skills.astro';
+import Metrics from '../components/Metrics.astro';
+import Achievements from '../components/Achievements.astro';
+import Education from '../components/Education.astro';
+---
+
+<Base title="Hiren Panchani — Solutions Architect">
+  <Hero />
+  <div class="warp-divider"></div>
+  <Skills />
+  <div class="warp-divider"></div>
+  <Metrics />
+  <div class="warp-divider"></div>
+  <Achievements />
+  <div class="warp-divider"></div>
+  <Education />
+  <div class="warp-divider"></div>
+
+  <!-- CTA to deeper pages -->
+  <section class="explore-cta">
+    <div class="container">
+      <div class="cta-grid">
+        <a href="/projects" class="cta-card glass-card reveal-left">
+          <span class="cta-icon">📐</span>
+          <h3>Architecture Projects</h3>
+          <p>Deep-dive into production systems I've designed — multi-region AWS, EKS platforms, observability stacks, and more.</p>
+          <span class="cta-arrow">Explore →</span>
+        </a>
+        <a href="/homelab" class="cta-card glass-card reveal-right">
+          <span class="cta-icon">🖥️</span>
+          <h3>Homelab & AI Workflow</h3>
+          <p>3-node Proxmox cluster, 10GbE networking, self-hosted everything, and my AI-augmented development setup.</p>
+          <span class="cta-arrow">Explore →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .explore-cta {
+    padding: 2rem 0 4rem;
+  }
+
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .cta-card {
+    padding: 2rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent-gradient);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .cta-card:hover::before { opacity: 1; }
+
+  .cta-icon { font-size: 2rem; }
+
+  .cta-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .cta-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .cta-arrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-1);
+    margin-top: auto;
+    transition: transform var(--transition);
+  }
+
+  .cta-card:hover .cta-arrow { transform: translateX(4px); }
+
+  @media (max-width: 768px) {
+    .cta-grid { grid-template-columns: 1fr; }
+  }
+</style>

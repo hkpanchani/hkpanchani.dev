@@ -1,0 +1,17 @@
+{
+  "name": "hkpanchani",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Personal site of Hiren Panchani — Solutions Architect, Cloud & Platform Engineering",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.7.0"
+  }
+}

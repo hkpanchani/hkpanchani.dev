@@ -1,0 +1,581 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Solutions Architect — Cloud & Platform Engineering | Senior DevOps Engineer' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>
+      // Restore accent color before paint
+      (function(){
+        var a = localStorage.getItem('hp-accent');
+        if (a && a !== 'default') document.documentElement.dataset.accent = a;
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0a0f" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hkpanchani.dev" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <!-- Warp starfield canvas -->
+    <canvas id="starfield"></canvas>
+
+    <nav class="nav" id="nav">
+      <div class="nav-inner container">
+        <a href="/" class="nav-logo" aria-label="Home">
+          <img src="/logo-nav.svg" alt="HP" class="logo-svg" width="120" height="40" />
+        </a>
+        <div class="nav-links">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/projects" class="nav-link">Projects</a>
+          <a href="/homelab" class="nav-link">Homelab</a>
+          <a href="/contacts" class="nav-link">Contact</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="nav-mobile" id="navMobile">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/projects" class="nav-link">Projects</a>
+        <a href="/homelab" class="nav-link">Homelab</a>
+        <a href="/contacts" class="nav-link">Contact</a>
+      </div>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+    <!-- Theme Settings FAB -->
+    <div class="theme-fab" id="themeFab">
+      <button class="fab-btn" id="fabToggle" aria-label="Theme settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+      <div class="fab-panel" id="fabPanel">
+        <div class="fab-section">
+          <span class="fab-label">Accent Color</span>
+          <div class="fab-row fab-row-wrap">
+            <button class="color-dot active" data-accent="default" style="--dot:#6366f1" aria-label="Indigo"></button>
+            <button class="color-dot" data-accent="blue" style="--dot:#3b82f6" aria-label="Blue"></button>
+            <button class="color-dot" data-accent="cyan" style="--dot:#06b6d4" aria-label="Cyan"></button>
+            <button class="color-dot" data-accent="teal" style="--dot:#14b8a6" aria-label="Teal"></button>
+            <button class="color-dot" data-accent="emerald" style="--dot:#10b981" aria-label="Emerald"></button>
+            <button class="color-dot" data-accent="amber" style="--dot:#f59e0b" aria-label="Amber"></button>
+            <button class="color-dot" data-accent="orange" style="--dot:#f97316" aria-label="Orange"></button>
+            <button class="color-dot" data-accent="rose" style="--dot:#f43f5e" aria-label="Rose"></button>
+            <button class="color-dot" data-accent="purple" style="--dot:#a855f7" aria-label="Purple"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-left">
+          <img src="/logo-nav.svg" alt="HP" class="footer-logo-svg" width="80" height="28" />
+          <span class="footer-copy">&copy; {new Date().getFullYear()} Hiren Panchani</span>
+        </div>
+        <div class="footer-links">
+          <a href="/projects">Projects</a>
+          <a href="/homelab">Homelab</a>
+          <a href="mailto:hello@hkpanchani.dev">Email</a>
+          <a href="https://github.com/hkpanchani" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      /* ── Nav ── */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1rem 0;
+        transition: background 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
+      }
+
+      .nav.scrolled {
+        background: rgba(10, 10, 15, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.04);
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-svg {
+        height: 32px;
+        width: auto;
+        transition: opacity var(--transition);
+      }
+
+      .nav-logo:hover .logo-svg {
+        opacity: 0.85;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: color var(--transition);
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-gradient);
+        transition: width var(--transition);
+        border-radius: 1px;
+      }
+
+      .nav-link:hover { color: var(--text-primary); }
+      .nav-link:hover::after { width: 100%; }
+
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        width: 28px;
+        padding: 4px 0;
+      }
+
+      .nav-toggle span {
+        display: block;
+        height: 2px;
+        background: var(--text-secondary);
+        border-radius: 1px;
+        transition: all var(--transition);
+      }
+
+      .nav-mobile {
+        display: none;
+        flex-direction: column;
+        padding: 1rem 0;
+      }
+
+      .nav-mobile .nav-link {
+        padding: 0.75rem clamp(1.25rem, 4vw, 3rem);
+        font-size: 1rem;
+      }
+
+      /* ── Footer ── */
+      .footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 0;
+        margin-top: 2rem;
+      }
+
+      .footer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .footer-logo-svg {
+        height: 22px;
+        width: auto;
+        opacity: 0.7;
+      }
+
+      .footer-copy {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .footer-links a {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        transition: color var(--transition);
+      }
+
+      .footer-links a:hover { color: var(--text-primary); }
+
+      /* ── Theme FAB ── */
+      .theme-fab {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 200;
+      }
+
+      .fab-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transition: all var(--transition);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        cursor: pointer;
+      }
+
+      .fab-btn:hover {
+        color: var(--text-primary);
+        border-color: var(--accent-1);
+        transform: rotate(30deg);
+      }
+
+      .fab-panel {
+        position: absolute;
+        bottom: 60px;
+        right: 0;
+        width: 220px;
+        padding: 1rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+        pointer-events: none;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .fab-panel.open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: all;
+      }
+
+      .fab-section {
+        margin-bottom: 0.75rem;
+      }
+
+      .fab-section:last-child { margin-bottom: 0; }
+
+      .fab-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .fab-row {
+        display: flex;
+        gap: 0.4rem;
+      }
+
+      .fab-row-wrap {
+        flex-wrap: wrap;
+      }
+
+      .color-dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--dot);
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all var(--transition);
+        position: relative;
+      }
+
+      .color-dot:hover {
+        transform: scale(1.15);
+      }
+
+      .color-dot.active {
+        border-color: var(--text-primary);
+        box-shadow: 0 0 0 2px var(--bg-secondary), 0 0 0 4px var(--dot);
+      }
+      @media (max-width: 768px) {
+        .nav-links { display: none; }
+        .nav-toggle { display: flex; }
+        .nav-mobile.open { display: flex; }
+
+        .footer-inner {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+
+    <script>
+      // ═══ NAV ═══
+      const nav = document.getElementById('nav');
+      const handleScroll = () => {
+        nav?.classList.toggle('scrolled', window.scrollY > 40);
+      };
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+
+      const toggle = document.getElementById('navToggle');
+      const mobile = document.getElementById('navMobile');
+      toggle?.addEventListener('click', () => {
+        mobile?.classList.toggle('open');
+      });
+
+      // ═══ DOT STARFIELD (canvas) ═══
+      const canvas = document.getElementById('starfield') as HTMLCanvasElement;
+      if (canvas) {
+        const ctx = canvas.getContext('2d')!;
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+        let scrollSpeed = 0;
+        let lastScroll = 0;
+
+        interface Star { x: number; y: number; z: number; px: number; py: number; hue: number; }
+        const stars: Star[] = [];
+        for (let i = 0; i < 400; i++) {
+          stars.push({
+            x: (Math.random() - 0.5) * w * 2,
+            y: (Math.random() - 0.5) * h * 2,
+            z: Math.random() * 1500 + 200,
+            px: 0, py: 0,
+            hue: Math.random() > 0.7 ? 200 + Math.random() * 60 : 240 + Math.random() * 30,
+          });
+        }
+
+        window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; });
+        window.addEventListener('scroll', () => { scrollSpeed = Math.min(Math.abs(window.scrollY - lastScroll) * 0.8, 50); lastScroll = window.scrollY; }, { passive: true });
+
+        function animateStars() {
+          ctx.clearRect(0, 0, w, h);
+          ctx.fillStyle = 'rgba(10, 10, 15, 1)';
+          ctx.fillRect(0, 0, w, h);
+
+          const warpSpeed = 1.5 + scrollSpeed * 1.5;
+          scrollSpeed *= 0.92;
+          const cx = w / 2, cy = h / 2;
+
+          for (const s of stars) {
+            s.px = (s.x / s.z) * 400 + cx;
+            s.py = (s.y / s.z) * 400 + cy;
+            s.z -= warpSpeed;
+            if (s.z <= 1 || s.px < -50 || s.px > w + 50 || s.py < -50 || s.py > h + 50) {
+              s.x = (Math.random() - 0.5) * w * 2; s.y = (Math.random() - 0.5) * h * 2; s.z = 1500;
+              s.px = (s.x / s.z) * 400 + cx; s.py = (s.y / s.z) * 400 + cy;
+            }
+            const nx = (s.x / s.z) * 400 + cx, ny = (s.y / s.z) * 400 + cy;
+            const size = Math.max(0.3, (1 - s.z / 1500) * 2);
+            const alpha = Math.max(0.05, (1 - s.z / 1500) * 0.5);
+            const lum = 75;
+            const sat = 60;
+            // Subtle warp streak
+            if (warpSpeed > 6) {
+              ctx.strokeStyle = `hsla(${s.hue}, ${sat}%, ${lum}%, ${alpha * 0.3})`;
+              ctx.lineWidth = size * 0.4;
+              ctx.beginPath(); ctx.moveTo(s.px, s.py); ctx.lineTo(nx, ny); ctx.stroke();
+            }
+            ctx.beginPath(); ctx.arc(nx, ny, size, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${s.hue}, ${sat}%, ${lum}%, ${alpha})`; ctx.fill();
+          }
+          requestAnimationFrame(animateStars);
+        }
+        animateStars();
+      }
+
+      // ═══ FLOATING TECH WORDS (DOM-based, drifting in background) ═══
+      const techWords = [
+        'EC2','S3','Lambda','EKS','ECS','Fargate','Aurora','RDS','DynamoDB','CloudFront',
+        'Route53','IAM','KMS','VPC','ALB','NLB','SQS','SNS','MSK','Kinesis',
+        'ElastiCache','OpenSearch','Bedrock','SageMaker','CloudWatch','CloudTrail',
+        'ACM','WAF','Shield','GuardDuty','Organizations','CloudFormation',
+        'Step Functions','EventBridge','API Gateway','ECR','EBS','EFS','Glacier',
+        'Athena','Glue','Redshift','EMR','Transit Gateway','PrivateLink',
+        'NAT Gateway','VPC Peering','Savings Plans','Spot Instances','Graviton',
+        'kubectl','Kubernetes','Helm','ArgoCD','Karpenter','Istio','Linkerd',
+        'Docker','containerd','Podman','BuildKit','HPA','VPA','PDB','IRSA',
+        'NetworkPolicy','Ingress','StatefulSet','DaemonSet','CronJob','ConfigMap',
+        'CoreDNS','etcd','kubelet','RBAC','Namespace','Deployment','ReplicaSet',
+        'ApplicationSet','Sync Waves','App-of-Apps','Canary','Blue/Green','Operator',
+        'Terraform','HCL','tfstate','tf plan','tf apply','Pulumi','CDK',
+        'Ansible','Packer','Terragrunt','Crossplane',
+        'GitHub Actions','GitLab CI','Jenkins','Flux','Tekton','Spinnaker',
+        'pipeline','artifact','kustomize','sealed-secrets','git merge',
+        'Prometheus','Grafana','Loki','Tempo','Jaeger','OpenTelemetry','OTel',
+        'Alertmanager','Sentry','PromQL','LogQL','TraceQL',
+        'SLO','SLI','p99','latency','throughput','cardinality',
+        'MySQL','PostgreSQL','MongoDB','Redis','Kafka','ClickHouse',
+        'Cassandra','CockroachDB','Metabase','read replica','failover',
+        'TCP/IP','DNS','HTTP/3','TLS 1.3','mTLS','gRPC','GraphQL','WebSocket',
+        'Cloudflare','Nginx','HAProxy','Envoy','Traefik','Tailscale','WireGuard',
+        'Calico','Cilium','pfSense','Zero Trust',
+        'SOC 2','ISO 27001','GDPR','OWASP','CVE','SonarQube','Trivy','Falco',
+        'VaultWarden','DKIM','SPF','DMARC','SAML','OIDC','OAuth2','JWT',
+        'TypeScript','Node.js','Python','Go','Rust','Bash','SQL','YAML','JSON',
+        'git','vim','tmux','zsh','curl','jq',
+        'Bedrock','Titan','Claude','Llama','Mistral','Ollama','RAG',
+        'embeddings','k-NN','HNSW','FAISS','MCP','MLflow','KServe',
+        'CI/CD','GitOps','IaC','SRE','FinOps','DevSecOps',
+        'runbook','postmortem','chaos engineering','DORA metrics',
+        'microservices','event-driven','CQRS','circuit breaker',
+        'Proxmox','TrueNAS','ZFS','QEMU','KVM','Home Assistant',
+        'Zigbee','Matter','Matrix','Synapse','10GbE','NVMe',
+      ];
+
+      const wordContainer = document.createElement('div');
+      wordContainer.className = 'floating-words';
+      document.body.appendChild(wordContainer);
+
+      function spawnWord() {
+        const el = document.createElement('span');
+        el.className = 'float-word';
+        el.textContent = techWords[Math.floor(Math.random() * techWords.length)];
+        // Random horizontal position
+        el.style.left = `${Math.random() * 100}%`;
+        // Random speed and size
+        const dur = 18 + Math.random() * 25;
+        const size = 0.6 + Math.random() * 0.5;
+        el.style.setProperty('--dur', `${dur}s`);
+        el.style.setProperty('--size', `${size}`);
+        el.style.animationDuration = `${dur}s`;
+        el.style.animationDelay = `${Math.random() * 3}s`;
+        wordContainer.appendChild(el);
+        // Clean up after animation
+        const cleanup = () => { el.remove(); spawnWord(); };
+        el.addEventListener('animationend', cleanup, { once: true });
+      }
+
+      // Spawn initial batch
+      for (let i = 0; i < 25; i++) {
+        const el = document.createElement('span');
+        el.className = 'float-word';
+        el.textContent = techWords[Math.floor(Math.random() * techWords.length)];
+        el.style.left = `${Math.random() * 100}%`;
+        const dur = 18 + Math.random() * 25;
+        const size = 0.6 + Math.random() * 0.5;
+        el.style.setProperty('--dur', `${dur}s`);
+        el.style.setProperty('--size', `${size}`);
+        el.style.animationDuration = `${dur}s`;
+        // Start mid-animation so they're already scattered
+        el.style.animationDelay = `-${Math.random() * dur}s`;
+        wordContainer.appendChild(el);
+        el.addEventListener('animationend', () => { el.remove(); spawnWord(); }, { once: true });
+      }
+
+      // ═══ SCROLL REVEAL — SPACE EDITION ═══
+      const revealSelectors = '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-glitch';
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+      );
+
+      document.querySelectorAll(revealSelectors).forEach((el) => observer.observe(el));
+
+      // ═══ PARALLAX TILT on glass cards ═══
+      document.querySelectorAll('.glass-card').forEach((card) => {
+        card.addEventListener('mousemove', (e: Event) => {
+          const evt = e as MouseEvent;
+          const rect = (card as HTMLElement).getBoundingClientRect();
+          const x = (evt.clientX - rect.left) / rect.width - 0.5;
+          const y = (evt.clientY - rect.top) / rect.height - 0.5;
+          (card as HTMLElement).style.transform =
+            `translateY(-4px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          (card as HTMLElement).style.transform = '';
+        });
+      });
+
+      // ═══ THEME SETTINGS FAB ═══
+      const fabToggle = document.getElementById('fabToggle');
+      const fabPanel = document.getElementById('fabPanel');
+
+      // Toggle panel
+      fabToggle?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fabPanel?.classList.toggle('open');
+      });
+      document.addEventListener('click', (e) => {
+        if (!(e.target as Element)?.closest('.theme-fab')) {
+          fabPanel?.classList.remove('open');
+        }
+      });
+
+      // Restore saved accent
+      const savedAccent = localStorage.getItem('hp-accent') || 'default';
+      if (savedAccent !== 'default') document.documentElement.dataset.accent = savedAccent;
+
+      function setActive(selector: string, attr: string, value: string) {
+        document.querySelectorAll(selector).forEach((btn) => {
+          btn.classList.toggle('active', (btn as HTMLElement).dataset[attr] === value);
+        });
+      }
+      setActive('.color-dot', 'accent', savedAccent);
+
+      // Accent buttons
+      document.querySelectorAll('.color-dot').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const accent = (btn as HTMLElement).dataset.accent || 'default';
+          if (accent === 'default') {
+            delete document.documentElement.dataset.accent;
+          } else {
+            document.documentElement.dataset.accent = accent;
+          }
+          localStorage.setItem('hp-accent', accent);
+          setActive('.color-dot', 'accent', accent);
+        });
+      });
+    </script>
+
+    <style is:global>
+      @import '../styles/global.css';
+    </style>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+---
+const metrics = [
+  { value: '6B+', label: 'Emails / Year', sub: '500M+ monthly throughput' },
+  { value: '~$156K', label: 'Annual Cost Saved', sub: '3 optimization cycles' },
+  { value: '840+', label: 'Prod Tickets Shipped', sub: '50+ epics, solo' },
+  { value: '6', label: 'Zero-Downtime Upgrades', sub: 'EKS 1.27 → 1.33' },
+  { value: '44', label: 'Terraform Modules', sub: 'Reusable IaC library' },
+  { value: '60+', label: 'Microservices', sub: 'Across 5 EKS clusters' },
+  { value: '160', label: 'ECR Repositories', sub: 'Lifecycle-managed' },
+  { value: '73', label: 'S3 Buckets', sub: 'Across all environments' },
+  { value: '159', label: 'IAM Roles', sub: 'Least-privilege IRSA' },
+  { value: '38', label: 'ACM Certificates', sub: 'Auto-renewed' },
+  { value: '40+', label: 'Grafana Dashboards', sub: '8 datasources' },
+  { value: '5', label: 'VPCs · 4 AZs', sub: 'Hub-and-spoke topology' },
+];
+---
+
+<section class="metrics" id="metrics">
+  <div class="container">
+    <div class="section-header reveal-glitch">
+      <h2 class="section-title">Impact by <span class="gradient-text">Numbers</span></h2>
+      <p class="section-subtitle">Quantified outcomes from designing, building, and operating production-grade platforms.</p>
+    </div>
+
+    <div class="metrics-grid">
+      {metrics.map((m, i) => (
+        <div class={`metric-card glass-card reveal-scale reveal-delay-${(i % 4) + 1}`}>
+          <div class="metric-value">{m.value}</div>
+          <div class="metric-label">{m.label}</div>
+          <div class="metric-sub">{m.sub}</div>
+          <div class="metric-glow"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .metric-card {
+    position: relative;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+    background: var(--bg-secondary);
+  }
+
+  .metric-card:hover {
+    background: rgba(255,255,255,0.03);
+    transform: none;
+  }
+
+  .metric-card:hover .metric-glow {
+    opacity: 1;
+  }
+
+  .metric-glow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: var(--accent-gradient);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .metric-value {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .metric-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 0.5rem;
+  }
+
+  .metric-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 1024px) {
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .metrics-grid { grid-template-columns: 1fr; }
+  }
+</style>

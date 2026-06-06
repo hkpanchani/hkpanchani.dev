@@ -1,0 +1,203 @@
+---
+---
+
+<section class="homelab" id="homelab">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-title">Homelab & <span class="gradient-text">AI Workflow</span></h2>
+      <p class="section-subtitle">Personal R&D playground — production-grade infrastructure at home and AI-augmented development.</p>
+    </div>
+
+    <div class="homelab-grid">
+      <!-- Homelab -->
+      <div class="homelab-card glass-card reveal">
+        <div class="card-header">
+          <span class="card-icon">🖥️</span>
+          <h3>Infrastructure Lab</h3>
+        </div>
+        <div class="spec-grid">
+          <div class="spec">
+            <span class="spec-label">Compute</span>
+            <span class="spec-value">3× Dell VxRail P570F</span>
+            <span class="spec-detail">56c/112t per node · Proxmox Clustered</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Memory</span>
+            <span class="spec-value">94 GiB per node</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Storage</span>
+            <span class="spec-value">TrueNAS · 9 TiB</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Network</span>
+            <span class="spec-value">10GbE</span>
+            <span class="spec-detail">Intel X710 · pfSense · HTTP/3 via Traefik</span>
+          </div>
+        </div>
+        <div class="services-row">
+          <span class="svc-chip">Matrix/Synapse</span>
+          <span class="svc-chip">VaultWarden</span>
+          <span class="svc-chip">Headscale</span>
+          <span class="svc-chip">Home Assistant</span>
+          <span class="svc-chip">Zigbee</span>
+          <span class="svc-chip">Matter</span>
+          <span class="svc-chip">Z-Wave</span>
+        </div>
+      </div>
+
+      <!-- AI Workflow -->
+      <div class="homelab-card glass-card reveal reveal-delay-2">
+        <div class="card-header">
+          <span class="card-icon">🤖</span>
+          <h3>AI-Augmented Workflow</h3>
+        </div>
+        <p class="ai-desc">
+          Daily operator of modern AI coding tools with custom integrations, hybrid inference, and security-first practices.
+        </p>
+        <div class="ai-tools">
+          <div class="ai-group">
+            <span class="ai-label">Tools</span>
+            <div class="ai-chips">
+              <span class="svc-chip accent">Claude Code</span>
+              <span class="svc-chip accent">Copilot Agent</span>
+              <span class="svc-chip accent">Cursor</span>
+            </div>
+          </div>
+          <div class="ai-group">
+            <span class="ai-label">MCP Integrations</span>
+            <div class="ai-chips">
+              <span class="svc-chip">Grafana</span>
+              <span class="svc-chip">Jira</span>
+              <span class="svc-chip">Odoo</span>
+              <span class="svc-chip">Bitwarden</span>
+            </div>
+          </div>
+          <div class="ai-group">
+            <span class="ai-label">Inference</span>
+            <div class="ai-chips">
+              <span class="svc-chip">Self-hosted Ollama</span>
+              <span class="svc-chip">Frontier APIs</span>
+            </div>
+          </div>
+          <div class="ai-group">
+            <span class="ai-label">Security</span>
+            <div class="ai-chips">
+              <span class="svc-chip">OWASP LLM Top 10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .homelab-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .homelab-card {
+    padding: 2rem;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-icon {
+    font-size: 1.5rem;
+  }
+
+  .card-header h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .spec-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .spec {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .spec-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .spec-value {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .spec-detail {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+
+  .services-row, .ai-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .svc-chip {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.6rem;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: var(--text-secondary);
+  }
+
+  .svc-chip.accent {
+    background: rgba(139,92,246,0.08);
+    border-color: rgba(139,92,246,0.2);
+    color: var(--accent-2);
+  }
+
+  .ai-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .ai-tools {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ai-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .homelab-grid { grid-template-columns: 1fr; }
+  }
+</style>

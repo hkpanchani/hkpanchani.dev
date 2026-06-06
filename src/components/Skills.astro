@@ -1,0 +1,184 @@
+---
+const skillGroups = [
+  {
+    title: 'AWS Cloud',
+    icon: '☁️',
+    color: '#ff9900',
+    items: ['Multi-Region (Primary+DR)', 'EKS', 'ECS Fargate', 'EC2', 'Lambda', 'ALB/NLB', 'Auto Scaling', 'Spot Fleets', 'Graviton (Arm64)', 'Aurora Global', 'MSK Kafka', 'OpenSearch', 'Bedrock', 'SageMaker', 'IAM', 'KMS', 'Secrets Manager', 'Systems Manager', 'Organizations', 'CloudFront', 'WAF', 'Route 53', 'ACM', 'CloudWatch', 'CloudTrail', 'Reserved Instances', 'Savings Plans'],
+  },
+  {
+    title: 'Containers & Kubernetes',
+    icon: '⎈',
+    color: '#326ce5',
+    items: ['Kubernetes (EKS 1.27→1.33)', 'Helm 3', 'ArgoCD (App-of-Apps)', 'ApplicationSets', 'Sync Waves', 'Karpenter', 'HPA/VPA', 'Pod Security Standards', 'IRSA', 'NetworkPolicy', 'PDBs', 'Custom Helm Library', 'Multi-Tenant Isolation', 'Blue/Green & Canary', 'ECR Lifecycle (160+ repos)', 'Docker BuildKit', 'Multi-Arch (amd64+arm64)'],
+  },
+  {
+    title: 'Infrastructure as Code',
+    icon: '🔧',
+    color: '#7b42bc',
+    items: ['Terraform (44+ modules)', 'Remote State (S3+DynamoDB)', 'Multi-Account Workflows', 'CloudFormation', 'Helm', 'Kustomize', 'Sealed Secrets', 'External Secrets'],
+  },
+  {
+    title: 'CI/CD & GitOps',
+    icon: '🔄',
+    color: '#2088ff',
+    items: ['ArgoCD (App-of-Apps)', 'GitHub Actions', 'Self-Hosted Runners (Spot EKS)', 'GitLab CI/CD', 'GitLab CE (Self-Hosted)', 'Helm Chart-per-Service', 'Docker BuildKit', 'Multi-Arch Images'],
+  },
+  {
+    title: 'Databases & Data',
+    icon: '🗄️',
+    color: '#4db33d',
+    items: ['Aurora MySQL 8.0', 'Aurora PostgreSQL 16', 'Blue/Green Deployments', 'Major Version Upgrades', 'RI Planning', 'MongoDB Atlas (VPC-Peered)', 'ClickHouse (Analytics+OTel)', 'OpenSearch (k-NN, Semantic)', 'Redis (ElastiCache)', 'MSK Kafka (3 clusters)', 'Metabase'],
+  },
+  {
+    title: 'Observability',
+    icon: '📊',
+    color: '#e6522c',
+    items: ['Prometheus', 'Grafana (8 datasources)', 'Loki (S3+DynamoDB)', 'Tempo (vParquet4)', 'OpenTelemetry SDK', 'B3/W3C Propagation', 'Log↔Trace Correlation', 'Sentry', 'Jaeger Thrift', '40+ Dashboards', 'ClickHouse OTel Schema', 'Alertmanager', 'Blackbox Exporter', 'Promtail'],
+  },
+  {
+    title: 'Networking & Edge',
+    icon: '🌐',
+    color: '#f48120',
+    items: ['VPC Architecture (5 VPCs)', 'Hub-and-Spoke Peering', 'Transit Gateway', 'NAT Gateway Tiering', 'Multi-AZ (4 AZs)', 'Cloudflare (DNS/WAF/Pages/Workers)', 'OpenResty/Nginx', 'Tailscale/Headscale', 'AWS PrivateLink', 'VPC Endpoints'],
+  },
+  {
+    title: 'Security & Compliance',
+    icon: '🛡️',
+    color: '#22c55e',
+    items: ['SOC 2 Type I & II', 'ISO 27001', 'ISO 27701', 'GDPR', 'Sprinto', 'Vanta', 'OWASP Top 10', 'OWASP LLM Top 10', 'SonarQube', 'OWASP ZAP', 'VaultWarden', 'SSOReady (SAML/OIDC)', 'IRSA Least-Privilege', 'CVE Patch Management', 'Cert Rotation (ACM/LE/acme.sh)'],
+  },
+  {
+    title: 'AI/ML & Agentic',
+    icon: '🤖',
+    color: '#a855f7',
+    items: ['Amazon Bedrock', 'Titan Embed v2', 'Claude Sonnet/Opus 4.x', 'Vector Search (OpenSearch k-NN)', 'HNSW/FAISS (1024-dim)', 'MCP Servers (Grafana/Jira/Odoo)', 'AI Incident Agent (LLM+RAG)', 'Ollama (Self-Hosted)', 'MLOps Roadmap (MLflow/KServe)'],
+  },
+  {
+    title: 'Programming & Scripting',
+    icon: '💻',
+    color: '#3178c6',
+    items: ['TypeScript / Node.js', 'Python (Automation/SDK)', 'Bash', 'HCL', 'SQL (MySQL/PG/ClickHouse)', 'YAML / Helm Templating'],
+  },
+  {
+    title: 'Operations & FinOps',
+    icon: '💰',
+    color: '#eab308',
+    items: ['Cost Explorer', 'Compute Optimizer', 'Trusted Advisor', 'RI/SP Portfolio (6-figure)', 'Graviton Migration', 'Spot Strategies', 'Capacity Planning', 'Runbook Authoring', 'Incident Management'],
+  },
+];
+---
+
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-header reveal-glitch">
+      <h2 class="section-title">Technical <span class="gradient-text">Arsenal</span></h2>
+      <p class="section-subtitle">The tools and technologies I've battle-tested in production — not just "familiar with", but actually deployed, debugged, and scaled.</p>
+    </div>
+
+    <div class="skills-grid">
+      {skillGroups.map((group, i) => (
+        <div class={`skill-group glass-card reveal-scale reveal-delay-${(i % 4) + 1}`}>
+          <div class="skill-group-header">
+            <span class="skill-icon" style={`--glow: ${group.color}`}>{group.icon}</span>
+            <h3 class="skill-group-title">{group.title}</h3>
+            <span class="skill-count">{group.items.length}</span>
+          </div>
+          <div class="skill-chips">
+            {group.items.map((item) => (
+              <span class="chip" style={`--chip-color: ${group.color}`}>{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    position: relative;
+  }
+
+  .section-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .skill-group {
+    padding: 1.75rem;
+  }
+
+  .skill-group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-icon {
+    font-size: 1.5rem;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.03);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--glow) 15%, transparent);
+  }
+
+  .skill-group-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+  }
+
+  .skill-count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chip {
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: var(--text-secondary);
+    transition: all var(--transition);
+    cursor: default;
+  }
+
+  .chip:hover {
+    background: color-mix(in srgb, var(--chip-color) 12%, transparent);
+    border-color: color-mix(in srgb, var(--chip-color) 30%, transparent);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

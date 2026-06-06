@@ -1,0 +1,312 @@
+---
+import Base from '../layouts/Base.astro';
+
+const projects = [
+  {
+    title: 'EKS Multi-Environment Platform',
+    status: 'Production',
+    stack: ['EKS 1.33', 'ArgoCD', 'Helm', 'Karpenter', 'IRSA', 'MSK', 'Aurora', 'OpenSearch', 'Redis'],
+    description: 'Designed and migrated all environments off ECS Fargate to a fully self-managed EKS platform. Production cluster runs 61 pods across 42 ArgoCD-managed services — UI, agency portal, scheduler, email pipeline, IMAP, billing, AI services, analytics, SSO, MCP server, and more.',
+    details: [
+      'Spot + on-demand node groups with interruption handling',
+      'ECR with lifecycle policies across 160+ repositories',
+      'IRSA-scoped IAM for zero-trust pod-level access',
+      'Internal + external ALBs with WAF in front',
+      '6 consecutive zero-downtime K8s version upgrades (1.27 → 1.33)',
+      'Custom Helm chart library shared across all services',
+    ],
+    icon: '⎈',
+    color: '#326ce5',
+  },
+  {
+    title: 'Hub-and-Spoke VPC Network',
+    status: 'Production',
+    stack: ['VPC Peering', 'NAT GW', 'Route 53 PHZ', 'Cloudflare', 'Tailscale', 'Headscale'],
+    description: 'Built a central shared-services VPC for bastion, observability, identity, and shared egress IPs. Peered all environment VPCs plus the MongoDB Atlas data plane.',
+    details: [
+      '5 VPCs with hub-and-spoke peering through shared-services account',
+      '4 isolated environments: prod, staging, warmup, shared',
+      '4 AZs per environment, 12 ALBs, 7 NAT gateways, 9 Route 53 zones, 38 ACM certs',
+      'Replaced per-env OpenVPN with single Tailscale mesh (Headscale control plane)',
+      'One identity, one ACL surface — zero VPN client confusion for 30+ engineers',
+      'Secondary DR region with cross-region S3/ECR replication, Aurora Global, R53 health-checked failover',
+    ],
+    icon: '🌐',
+    color: '#f48120',
+  },
+  {
+    title: 'Observability Platform — Build vs Buy',
+    status: 'Production',
+    stack: ['Prometheus', 'Loki', 'Tempo', 'Grafana', 'ClickHouse', 'Sentry', 'OpenTelemetry'],
+    description: 'Self-hosted observability stack on EKS replacing a commercial APM. Quantified the build-vs-buy tradeoff — 3-year self-hosted TCO is ~20% lower with full data sovereignty.',
+    details: [
+      'kube-prometheus-stack with S3-backed Loki (720h retention)',
+      'Tempo with vParquet4 for distributed tracing',
+      'In-house OpenTelemetry SDK across Node.js services',
+      'Log↔Trace correlation: Loki derivedFields ↔ Tempo tracesToLogsV2',
+      '8 Grafana datasources, 40+ dashboards, ClickHouse OTel schema',
+      'Double-digit MB/s ingestion across 60+ apps in 7 namespaces',
+    ],
+    icon: '📊',
+    color: '#e6522c',
+  },
+  {
+    title: '44-Module Terraform Library',
+    status: 'Production',
+    stack: ['Terraform', 'S3', 'DynamoDB', 'Multi-Account', 'HCL'],
+    description: 'Custom IaC module library covering 44 AWS resource types, reused identically across 4 environments. Every new service ships in ~30 lines of Terraform.',
+    details: [
+      'Modules: VPC, EKS, RDS, ALB, ASG, MSK, ElastiCache, ECR, IAM, Route 53, SG, SNS/SQS, CloudWatch',
+      'Remote state on S3 + DynamoDB locking',
+      'Multi-account workflows across environments',
+      'Consistent security group, IAM, and networking patterns',
+    ],
+    icon: '🔧',
+    color: '#7b42bc',
+  },
+  {
+    title: 'Cost Optimization — 3 Cycles (~30% each)',
+    status: 'Shipped',
+    stack: ['Graviton', 'Spot', 'Aurora I/O-Opt', 'RI/SP', 'S3 Lifecycle'],
+    description: 'Three distinct optimization cycles totaling ~$156K/year in savings — all without service degradation. CloudWatch + Grafana confirmed stable p99 latencies throughout.',
+    details: [
+      'Cycle 1: Early right-sizing + Reserved Instance portfolio',
+      'Cycle 2: Graviton migration (~20% saving), Spot Node Groups for CI + stateless workloads, Aurora I/O-Optimized',
+      'Cycle 3: Aurora Blue/Green for engine upgrades, ElastiCache downsizing, S3 lifecycle tiering',
+      'Six-figure RI/SP commitments managed — zero expiry surprises',
+      'Decommissioned unused green/dump clusters',
+    ],
+    icon: '💰',
+    color: '#eab308',
+  },
+  {
+    title: 'AI Incident Investigation Agent',
+    status: 'Design → POC',
+    stack: ['Bedrock', 'Titan Embed v2', 'OpenSearch k-NN', 'Grafana MCP', 'Fastify'],
+    description: 'An LLM-powered agent that queries 5 Grafana datasources (Prometheus/Loki/Tempo/ClickHouse/Sentry) to correlate a failing service to its root cause and offending deployment — replacing 30-min to 2-hr manual investigations.',
+    details: [
+      'Semantic search POC: Titan Embeddings v2 + OpenSearch k-NN (HNSW, FAISS, 1024-dim)',
+      'Production query quality of 0.65–0.88 cosine similarity',
+      'Node.js/Fastify service with Grafana MCP tools',
+      'Root-cause analysis returned in <30 seconds',
+      'Build cost vs commercial AIOps tooling fully scoped',
+    ],
+    icon: '🤖',
+    color: '#a855f7',
+  },
+  {
+    title: 'High-Throughput Email Infrastructure',
+    status: 'Production',
+    stack: ['EKS', 'ClickHouse', 'DKIM/SPF/DMARC', 'MSK', 'S3'],
+    description: 'Designed the complete email sending pipeline handling 6B+ emails/year (500M+/month) with an in-house ESP featuring dedicated IPs, multi-node MTA, and automated deliverability controls.',
+    details: [
+      'Pipeline: Scheduler → Composer → Sender → MTA → Recipient ESP',
+      'Horizontal IMAP Connection Manager on EKS',
+      'Dedicated IP pool with automated warm-up',
+      'Multi-node MTA cluster with DKIM/SPF/DMARC automation',
+      'ClickHouse delivery analytics for real-time tracking',
+      'Mail senders on public subnets for proper IP attribution',
+    ],
+    icon: '📧',
+    color: '#06b6d4',
+  },
+  {
+    title: 'Self-Hosted Security & Dev Platforms',
+    status: 'Production',
+    stack: ['VaultWarden', 'SSOReady', 'Headscale', 'GitLab CE', 'SonarQube'],
+    description: 'Built and operated the full internal developer + security platform — replacing SaaS solutions with self-hosted alternatives for cost savings and data sovereignty.',
+    details: [
+      'VaultWarden: Password vault for 50+ org members',
+      'SSOReady: SAML/OIDC SSO bridge for legacy apps',
+      'Tailscale + Headscale mesh VPN replacing OpenVPN for 30+ engineers',
+      'GitLab CE: Private SCM/CI for internal workloads',
+      'SonarQube + OWASP ZAP for code quality and security scanning',
+      'SOC 2 I+II, ISO 27001/27701, GDPR compliance controls',
+    ],
+    icon: '🛡️',
+    color: '#22c55e',
+  },
+];
+---
+
+<Base title="Projects — Hiren Panchani" description="Architecture projects and production infrastructure designed and operated by Hiren Panchani.">
+  <section class="projects-hero">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="page-badge">
+          <span class="badge-icon">📐</span>
+          Architecture Portfolio
+        </div>
+        <h1 class="section-title">Production <span class="gradient-text">Projects</span></h1>
+        <p class="section-subtitle">
+          Systems I've designed from scratch, scaled to millions, and operate daily.
+          Each project represents real production infrastructure — not tutorial apps.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects-list">
+    <div class="container">
+      {projects.map((p, i) => (
+        <div class={`project-card glass-card reveal reveal-delay-${(i % 3) + 1}`}>
+          <div class="project-header">
+            <div class="project-icon" style={`--project-color: ${p.color}`}>{p.icon}</div>
+            <div class="project-title-group">
+              <h2 class="project-title">{p.title}</h2>
+              <span class="project-status" style={`--status-color: ${p.status === 'Production' ? '#22c55e' : p.status === 'Shipped' ? '#06b6d4' : '#eab308'}`}>{p.status}</span>
+            </div>
+          </div>
+
+          <p class="project-desc">{p.description}</p>
+
+          <div class="project-details">
+            <ul class="detail-list">
+              {p.details.map((d) => (
+                <li>{d}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="project-stack">
+            {p.stack.map((s) => (
+              <span class="stack-chip" style={`--chip-color: ${p.color}`}>{s}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .projects-hero {
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+  }
+
+  .page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-2);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .projects-list {
+    padding-top: 0;
+    padding-bottom: 4rem;
+  }
+
+  .projects-list .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    padding: 2rem 2.5rem;
+  }
+
+  .project-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-icon {
+    font-size: 2rem;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--project-color) 8%, transparent);
+    flex-shrink: 0;
+  }
+
+  .project-title-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .project-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .project-status {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--status-color) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--status-color) 25%, transparent);
+    color: var(--status-color);
+  }
+
+  .project-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    max-width: 800px;
+  }
+
+  .detail-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .detail-list li {
+    font-size: 0.83rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .detail-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent-1);
+    font-weight: 700;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .stack-chip {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--chip-color) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--chip-color) 18%, transparent);
+    color: color-mix(in srgb, var(--chip-color) 80%, #fff);
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 768px) {
+    .project-card { padding: 1.5rem; }
+    .detail-list { grid-template-columns: 1fr; }
+    .project-header { flex-direction: column; }
+  }
+</style>
