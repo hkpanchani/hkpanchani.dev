@@ -13,42 +13,6 @@
   </div>
 
   <div class="container hero-content">
-    <!-- Neofetch-style intro block -->
-    <div class="neofetch reveal-glitch">
-      <div class="ascii-rack" aria-hidden="true">
-        <div class="rack-row"><span class="led on"></span><span class="slab"></span></div>
-        <div class="rack-row"><span class="led on"></span><span class="slab"></span></div>
-        <div class="rack-row"><span class="led warn"></span><span class="slab"></span></div>
-        <div class="rack-row"><span class="led on"></span><span class="slab"></span></div>
-        <div class="rack-row"><span class="led on"></span><span class="slab"></span></div>
-        <div class="rack-row"><span class="led info"></span><span class="slab dim"></span></div>
-      </div>
-      <div class="neofetch-info">
-        <div class="nf-line"><span class="nf-key">hiren</span><span class="nf-at">@</span><span class="nf-host">hkpanchani.dev</span></div>
-        <div class="nf-separator">─────────────────────────</div>
-        <div class="nf-line"><span class="nf-label">OS:</span> AWS us-west-2 (primary) + DR</div>
-        <div class="nf-line"><span class="nf-label">Uptime:</span> 7.5 years</div>
-        <div class="nf-line"><span class="nf-label">Shell:</span> bash + terraform + helm</div>
-        <div class="nf-line"><span class="nf-label">WM:</span> Kubernetes (EKS 1.27→1.36)</div>
-        <div class="nf-line"><span class="nf-label">Packages:</span> 44 terraform modules</div>
-        <div class="nf-line"><span class="nf-label">CPU:</span> 5 EKS clusters · 60+ microservices</div>
-        <div class="nf-line"><span class="nf-label">Memory:</span> 8 Aurora clusters · 3 Kafka</div>
-        <div class="nf-line"><span class="nf-label">Disk:</span> 73 S3 buckets · 160 ECR repos</div>
-        <div class="nf-line"><span class="nf-label">Network:</span> 5 VPCs · hub-and-spoke</div>
-        <div class="nf-line"><span class="nf-label">Throughput:</span> 6B+ emails/year</div>
-        <div class="nf-colors">
-          <span class="color-block" style="background:#ff5f57"></span>
-          <span class="color-block" style="background:#febc2e"></span>
-          <span class="color-block" style="background:#28c840"></span>
-          <span class="color-block" style="background:#6366f1"></span>
-          <span class="color-block" style="background:#8b5cf6"></span>
-          <span class="color-block" style="background:#06b6d4"></span>
-          <span class="color-block" style="background:#f97316"></span>
-          <span class="color-block" style="background:#ec4899"></span>
-        </div>
-      </div>
-    </div>
-
     <h1 class="hero-title reveal reveal-delay-1">
       <span class="hero-greeting">Hey, I'm</span>
       <span class="hero-name">Hiren Panchani</span>
@@ -194,28 +158,31 @@
   .ascii-rack {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 10px;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 6px;
+    gap: 5px;
+    padding: 14px 12px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
     flex-shrink: 0;
-    width: 80px;
+    width: 100px;
+    align-self: stretch;
+    justify-content: space-between;
   }
 
   .rack-row {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 5px 8px;
+    gap: 8px;
+    padding: 8px 10px;
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 3px;
+    border-radius: 4px;
+    flex: 1;
   }
 
   .led {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     flex-shrink: 0;
   }
@@ -245,13 +212,13 @@
 
   .slab {
     flex: 1;
-    height: 6px;
+    height: 8px;
     background: var(--accent-1);
-    border-radius: 2px;
-    opacity: 0.25;
+    border-radius: 3px;
+    opacity: 0.3;
   }
 
-  .slab.dim { opacity: 0.12; }
+  .slab.dim { opacity: 0.15; }
 
   .neofetch-info {
     font-size: 0.78rem;

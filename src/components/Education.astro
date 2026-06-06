@@ -16,28 +16,32 @@ const education = [
 
 const certifications = [
   {
-    name: 'AWS Certified Solutions Architect — Professional',
-    issuer: 'Amazon Web Services',
-    date: 'Mar 2025',
-    color: '#ff9900',
-  },
-  {
     name: 'AWS Certified Security — Specialty',
     issuer: 'Amazon Web Services',
-    date: 'Feb 2026',
+    date: 'Feb 2026 — Feb 2029',
     color: '#ff9900',
+    verifyUrl: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/30d254e5d4424afb91d0a30ff7de7cc8',
+  },
+  {
+    name: 'AWS Certified Solutions Architect — Professional',
+    issuer: 'Amazon Web Services',
+    date: 'Mar 2025 — Mar 2028',
+    color: '#ff9900',
+    verifyUrl: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/13c9952afbbf45ccb058618b0c193d88',
   },
   {
     name: 'CCNP — Routing & Switching',
     issuer: 'Cisco',
     date: 'Jul 2016',
     color: '#049fd9',
+    verifyUrl: '',
   },
   {
     name: 'CCNA — Routing & Switching',
     issuer: 'Cisco',
     date: 'Jul 2016',
     color: '#049fd9',
+    verifyUrl: '',
   },
 ];
 ---
@@ -85,6 +89,9 @@ const certifications = [
                   <span class="cert-issuer">{c.issuer}</span>
                   <span class="cert-date">{c.date}</span>
                 </div>
+                {c.verifyUrl && (
+                  <a href={c.verifyUrl} target="_blank" rel="noopener" class="cert-verify">Verify ↗</a>
+                )}
               </div>
             </div>
           ))}
@@ -207,6 +214,26 @@ const certifications = [
   .cert-date {
     font-family: var(--font-mono);
     color: var(--text-secondary);
+    font-size: 0.75rem;
+  }
+
+  .cert-verify {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--accent-1);
+    text-decoration: none;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid rgba(99,102,241,0.2);
+    background: rgba(99,102,241,0.06);
+    transition: all var(--transition);
+  }
+
+  .cert-verify:hover {
+    background: rgba(99,102,241,0.12);
+    border-color: var(--accent-1);
   }
 
   @media (max-width: 768px) {
