@@ -338,12 +338,32 @@ const { title, description = 'Solutions Architect — Cloud & Platform Engineeri
       @media (max-width: 768px) {
         .nav-links { display: none; }
         .nav-toggle { display: flex; }
-        .nav-mobile.open { display: flex; }
+        .nav-mobile.open {
+          display: flex;
+          background: rgba(10, 10, 15, 0.95);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-top: 1px solid var(--border);
+        }
+        .nav-mobile .nav-link {
+          padding: 1rem clamp(1.25rem, 4vw, 3rem);
+          font-size: 1.05rem;
+          border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
 
         .footer-inner {
           flex-direction: column;
           text-align: center;
         }
+
+        .footer-links {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .theme-fab { bottom: 1rem; right: 1rem; }
+        .fab-btn { width: 42px; height: 42px; }
+        .fab-panel { width: 200px; }
       }
     </style>
 
@@ -469,8 +489,8 @@ const { title, description = 'Solutions Architect — Cloud & Platform Engineeri
         const el = document.createElement('span');
         el.className = 'float-word';
         el.textContent = techWords[Math.floor(Math.random() * techWords.length)];
-        // Random horizontal position
-        el.style.left = `${Math.random() * 100}%`;
+        // Cap position so words don't overflow right edge
+        el.style.left = `${Math.random() * 85}%`;
         // Random speed and size
         const dur = 18 + Math.random() * 25;
         const size = 0.6 + Math.random() * 0.5;
@@ -489,13 +509,12 @@ const { title, description = 'Solutions Architect — Cloud & Platform Engineeri
         const el = document.createElement('span');
         el.className = 'float-word';
         el.textContent = techWords[Math.floor(Math.random() * techWords.length)];
-        el.style.left = `${Math.random() * 100}%`;
+        el.style.left = `${Math.random() * 85}%`;
         const dur = 18 + Math.random() * 25;
         const size = 0.6 + Math.random() * 0.5;
         el.style.setProperty('--dur', `${dur}s`);
         el.style.setProperty('--size', `${size}`);
         el.style.animationDuration = `${dur}s`;
-        // Start mid-animation so they're already scattered
         el.style.animationDelay = `-${Math.random() * dur}s`;
         wordContainer.appendChild(el);
         el.addEventListener('animationend', () => { el.remove(); spawnWord(); }, { once: true });
