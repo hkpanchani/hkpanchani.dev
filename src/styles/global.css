@@ -98,6 +98,74 @@
   --word-color: rgba(20, 184, 166, 0.10);
 }
 
+/* ── Custom Cursor Glow ── */
+.cursor-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+  opacity: 0;
+  will-change: left, top;
+}
+.cursor-glow.active { opacity: 1; }
+@media (max-width: 768px) { .cursor-glow { display: none; } }
+
+/* ── Scroll Progress Bar ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent-gradient);
+  z-index: 999;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* ── Page Transition ── */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.page-transition.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.transition-text {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-1);
+  animation: blink-transition 0.6s ease-in-out infinite alternate;
+}
+@keyframes blink-transition {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+/* ── Easter Egg Matrix Rain ── */
+.matrix-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.matrix-canvas.active { opacity: 1; }
+
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

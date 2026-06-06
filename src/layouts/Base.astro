@@ -30,6 +30,17 @@ const { title, description = 'Solutions Architect — Cloud & Platform Engineeri
     <title>{title}</title>
   </head>
   <body>
+    <!-- Custom cursor -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Page transition overlay -->
+    <div class="page-transition" id="pageTransition">
+      <div class="transition-text">Loading...</div>
+    </div>
+
     <!-- Warp starfield canvas -->
     <canvas id="starfield"></canvas>
 
@@ -589,6 +600,135 @@ const { title, description = 'Solutions Architect — Cloud & Platform Engineeri
           }
           localStorage.setItem('hp-accent', accent);
           setActive('.color-dot', 'accent', accent);
+        });
+      });
+
+      // ═══ CUSTOM CURSOR GLOW (follows mouse, lights up near content) ═══
+      const cursorGlow = document.getElementById('cursorGlow');
+      if (cursorGlow && window.matchMedia('(pointer: fine)').matches) {
+        let mouseX = 0, mouseY = 0;
+        let glowX = 0, glowY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursorGlow.classList.add('active');
+        });
+
+        document.addEventListener('mouseleave', () => {
+          cursorGlow.classList.remove('active');
+        });
+
+        function animateCursor() {
+          glowX += (mouseX - glowX) * 0.15;
+          glowY += (mouseY - glowY) * 0.15;
+          cursorGlow.style.left = `${glowX}px`;
+          cursorGlow.style.top = `${glowY}px`;
+          requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+      }
+
+      // ═══ SCROLL PROGRESS BAR ═══
+      const progressBar = document.getElementById('scrollProgress');
+      if (progressBar) {
+        window.addEventListener('scroll', () => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          progressBar.style.width = `${progress}%`;
+        }, { passive: true });
+      }
+
+      // ═══ PAGE TRANSITIONS (smooth between internal pages) ═══
+      const pageTransition = document.getElementById('pageTransition');
+      document.querySelectorAll('a[href^="/"]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const href = (link as HTMLAnchorElement).getAttribute('href');
+          if (!href || href === window.location.pathname) return;
+          e.preventDefault();
+          if (pageTransition) {
+            pageTransition.classList.add('active');
+            setTimeout(() => { window.location.href = href; }, 300);
+          } else {
+            window.location.href = href;
+          }
+        });
+      });
+      // Fade out transition on page load
+      window.addEventListener('pageshow', () => {
+        pageTransition?.classList.remove('active');
+      });
+
+      // ═══ KONAMI CODE EASTER EGG (↑↑↓↓←→←→BA) — triggers matrix rain ═══
+      const konamiSequence = [38,38,40,40,37,39,37,39,66,65];
+      let konamiIndex = 0;
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode === konamiSequence[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiSequence.length) {
+            konamiIndex = 0;
+            triggerMatrixRain();
+          }
+        } else {
+          konamiIndex = 0;
+        }
+      });
+
+      function triggerMatrixRain() {
+        const existing = document.querySelector('.matrix-canvas');
+        if (existing) { existing.remove(); return; }
+
+        const mc = document.createElement('canvas');
+        mc.className = 'matrix-canvas';
+        document.body.appendChild(mc);
+        const mctx = mc.getContext('2d')!;
+        mc.width = window.innerWidth;
+        mc.height = window.innerHeight;
+
+        const fontSize = 14;
+        const columns = Math.floor(mc.width / fontSize);
+        const drops = new Array(columns).fill(1);
+        const chars = 'ｱｲｳｴｵｶｷｸｹｺ01アイウエオカキクケコサシスセソ'.split('');
+
+        requestAnimationFrame(() => mc.classList.add('active'));
+
+        function drawMatrix() {
+          mctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+          mctx.fillRect(0, 0, mc.width, mc.height);
+          mctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-1').trim() || '#6366f1';
+          mctx.font = `${fontSize}px monospace`;
+
+          for (let i = 0; i < drops.length; i++) {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+            mctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > mc.height && Math.random() > 0.975) {
+              drops[i] = 0;
+            }
+            drops[i]++;
+          }
+          requestAnimationFrame(drawMatrix);
+        }
+        drawMatrix();
+
+        // Auto-remove after 8 seconds
+        setTimeout(() => {
+          mc.classList.remove('active');
+          setTimeout(() => mc.remove(), 500);
+        }, 8000);
+      }
+
+      // ═══ MAGNETIC BUTTONS (buttons attract toward cursor) ═══
+      document.querySelectorAll('.btn').forEach((btn) => {
+        btn.addEventListener('mousemove', (e: Event) => {
+          const evt = e as MouseEvent;
+          const rect = (btn as HTMLElement).getBoundingClientRect();
+          const x = evt.clientX - rect.left - rect.width / 2;
+          const y = evt.clientY - rect.top - rect.height / 2;
+          (btn as HTMLElement).style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          (btn as HTMLElement).style.transform = '';
         });
       });
     </script>
