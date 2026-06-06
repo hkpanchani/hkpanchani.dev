@@ -180,7 +180,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  padding: 0 clamp(1.5rem, 5vw, 3rem);
 }
 
 section {
@@ -449,4 +449,25 @@ section {
 /* ── Responsive ── */
 @media (max-width: 768px) {
   section { padding: 3rem 0; }
+
+  /* Reduce animation distances on mobile to prevent clipping */
+  .reveal {
+    transform: translateY(30px);
+    filter: blur(3px);
+  }
+  .reveal-left {
+    transform: translateX(-40px);
+    filter: blur(3px);
+  }
+  .reveal-right {
+    transform: translateX(40px);
+    filter: blur(3px);
+  }
+  .reveal-scale {
+    transform: scale(0.85);
+    filter: blur(4px);
+  }
+  .reveal-glitch {
+    filter: blur(4px);
+  }
 }
